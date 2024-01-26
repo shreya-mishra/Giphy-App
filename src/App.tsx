@@ -10,11 +10,10 @@ const App = () => {
   const [searchGif, setSearchGif] = useState<string>();
   const [searchResults, setSearchResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  // const [page,setPage] = useState(1)
 
   useEffect(() => {
     fetchGifData();
-  }, [giphyData]);
+  });
 
   const handleSearch = () => {
     setSearchGif(searchVal);
@@ -29,13 +28,15 @@ const App = () => {
         );
         setSearchResults(filteredData);
         setGiphyData(filteredData);
-        setSearchVal('');
+      } else {
+        setGiphyData(res);
       }
-      setGiphyData(res);
+      setSearchVal('');
     } catch (error) {
       console.error('error fetching data', error);
     } finally {
       setIsLoading(false);
+      // setSearchVal('');
     }
   };
   const handleEndReached = () => {
