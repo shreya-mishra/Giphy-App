@@ -3,13 +3,10 @@ import {
   FlatList,
   Image,
   StyleSheet,
-  Text,
   View,
 } from 'react-native';
 import React from 'react';
-import FastImage from 'react-native-fast-image';
 
-// TODO:Add type of the response
 const DisplayGifs = ({
   giphyData,
   isLoading,
