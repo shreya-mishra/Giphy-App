@@ -1,4 +1,4 @@
-import {GIF_API} from '../constants/Api';
+import {GIF_API} from '../../constants/Api';
 
 export const getGiphyData = async () => {
   try {

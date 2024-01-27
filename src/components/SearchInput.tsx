@@ -1,5 +1,7 @@
-import {StyleSheet, TextInput, View} from 'react-native';
+import {StyleSheet, TextInput, View, useColorScheme} from 'react-native';
 import React from 'react';
+// import {useTheme} from '../contextApi/ThemeContext';
+import {COLORS} from '../constants/Colors';
 
 const SearchInput = ({
   setSearchVal,
@@ -10,16 +12,24 @@ const SearchInput = ({
   searchVal: string | undefined;
   handleSearch: () => void;
 }) => {
+  const theme = useColorScheme();
+
   const onChangeHandler = (val: any) => {
     setSearchVal(val);
   };
   return (
-    <View>
+    <View style={styles.container}>
       <TextInput
         placeholder={'search username'}
         value={searchVal}
         onChangeText={onChangeHandler}
-        style={styles.textInput}
+        style={[
+          styles.textInput,
+          {
+            borderColor: theme === 'dark' ? COLORS.primary : COLORS.secondary,
+            color: theme === 'dark' ? COLORS.primary : COLORS.secondary,
+          },
+        ]}
         onTouchEnd={handleSearch}
       />
     </View>
@@ -29,8 +39,11 @@ const SearchInput = ({
 export default SearchInput;
 
 const styles = StyleSheet.create({
+  container: {
+    margin: 10,
+  },
   textInput: {
     borderWidth: 2,
-    borderColor: 'white',
+    padding: 10,
   },
 });

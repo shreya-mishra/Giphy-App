@@ -5,8 +5,10 @@ import {
   StyleSheet,
   Text,
   View,
+  useColorScheme,
 } from 'react-native';
 import React from 'react';
+import {COLORS} from '../constants/Colors';
 
 const DisplayGifs = ({
   giphyData,
@@ -17,6 +19,7 @@ const DisplayGifs = ({
   isLoading: boolean;
   handleEndReached: () => void;
 }) => {
+  const theme = useColorScheme();
   const keyExtractor = (item: {id: string}) => item.id;
   const renderItem = ({
     item,
@@ -26,7 +29,11 @@ const DisplayGifs = ({
     const {original_still} = item.images;
     const {url} = original_still;
     return (
-      <View style={styles.renderContainer}>
+      <View
+        style={[
+          styles.renderContainer,
+          {borderColor: theme === 'dark' ? COLORS.primary : COLORS.secondary},
+        ]}>
         <Image
           source={{
             uri: url,
@@ -57,7 +64,10 @@ const DisplayGifs = ({
           numColumns={3}
         />
       ) : (
-        <Text style={{color: 'white'}}>No data found</Text>
+        <Text
+          style={{color: theme === 'dark' ? COLORS.primary : COLORS.secondary}}>
+          No data found
+        </Text>
       )}
     </View>
   );
@@ -70,12 +80,10 @@ const styles = StyleSheet.create({
     margin: 20,
   },
   renderContainer: {
-    // marginTop: 10,
     margin: 4,
     width: 150,
     height: 150,
-    borderWidth: 2,
-    borderColor: 'white',
+    borderWidth: 4,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',

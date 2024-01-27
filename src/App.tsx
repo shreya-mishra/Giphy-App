@@ -1,15 +1,18 @@
 import React, {useEffect, useState} from 'react';
-import {View} from 'react-native';
-import {getGiphyData} from './GetData/GetGiphyData';
+import {View, useColorScheme} from 'react-native';
+import {getGiphyData} from './utils/GetData/GetGiphyData';
 import DisplayGifs from './components/DisplayGifs';
 import SearchInput from './components/SearchInput';
-
+import {COLORS} from './constants/Colors';
+// import {ThemeProvider, useTheme} from './contextApi/ThemeContext';
 const App = () => {
+  // const {isDarkMode, toggleTheme} = useTheme();
   const [giphyData, setGiphyData] = useState([]);
   const [searchVal, setSearchVal] = useState<string>();
   const [searchGif, setSearchGif] = useState<string>();
   const [isLoading, setIsLoading] = useState(false);
-
+  const theme = useColorScheme();
+  console.log('theme>>>', theme);
   useEffect(() => {
     fetchGifData();
   }, [searchVal]);
@@ -39,7 +42,10 @@ const App = () => {
     fetchGifData();
   };
   return (
-    <View>
+    <View
+      style={{
+        backgroundColor: theme === 'dark' ? COLORS.secondary : COLORS.primary,
+      }}>
       <SearchInput
         setSearchVal={setSearchVal}
         searchVal={searchVal}
