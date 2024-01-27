@@ -8,12 +8,11 @@ const App = () => {
   const [giphyData, setGiphyData] = useState([]);
   const [searchVal, setSearchVal] = useState<string>();
   const [searchGif, setSearchGif] = useState<string>();
-  const [searchResults, setSearchResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     fetchGifData();
-  });
+  }, [searchVal]);
 
   const handleSearch = () => {
     setSearchGif(searchVal);
@@ -22,27 +21,22 @@ const App = () => {
     try {
       setIsLoading(true);
       const res = await getGiphyData();
-      if (searchVal?.length > 0 || searchGif?.length > 0) {
-        const filteredData = giphyData.filter(item =>
+      if (searchVal && searchVal?.trim().length > 0) {
+        const filteredData = res.filter((item: {username: string}) =>
           item.username.toLowerCase().includes(searchVal.toLowerCase()),
         );
-        setSearchResults(filteredData);
         setGiphyData(filteredData);
       } else {
         setGiphyData(res);
       }
-      setSearchVal('');
     } catch (error) {
       console.error('error fetching data', error);
     } finally {
       setIsLoading(false);
-      // setSearchVal('');
     }
   };
   const handleEndReached = () => {
-    if (!isLoading) {
-      fetchGifData();
-    }
+    fetchGifData();
   };
   return (
     <View>
@@ -53,7 +47,6 @@ const App = () => {
       />
       <DisplayGifs
         giphyData={giphyData}
-        searchGif={searchVal}
         isLoading={isLoading}
         handleEndReached={handleEndReached}
       />
