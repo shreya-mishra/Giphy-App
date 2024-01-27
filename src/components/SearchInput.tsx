@@ -6,8 +6,8 @@ const SearchInput = ({
   searchVal,
   handleSearch,
 }: {
-  setSearchVal: () => void;
-  searchVal: string;
+  setSearchVal: (val: string) => void;
+  searchVal: string | undefined;
   handleSearch: () => void;
 }) => {
   const onChangeHandler = (val: any) => {
