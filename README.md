@@ -86,3 +86,13 @@ To learn more about React Native, take a look at the following resources:
 - use Flatlist
 - SearchInput
 - Filter by name
+
+
+### Video of the Giphy App
+
+[Screencast from 01-27-2024 03:04:51 PM.webm](https://github.com/shreya-mishra/Giphy-App/assets/61110378/385b0c43-3e80-47fa-aead-3e72793c4027)
+
+### Screenshots of the App
+![image](https://github.com/shreya-mishra/Giphy-App/assets/61110378/0c4baabe-573b-4201-bc0b-74b9b611759a)
+![image](https://github.com/shreya-mishra/Giphy-App/assets/61110378/2383683a-68e1-4e31-a5d3-538d92522654)
+
