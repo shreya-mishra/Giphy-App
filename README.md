@@ -82,7 +82,7 @@ To learn more about React Native, take a look at the following resources:
 - call the api
 - chek the response
 - get the gifs and name
-- then show it on screen 
+- then show it on screen => for now will show images also for optimization for images we can use FastImage , if will get time then show gifs 
 - use Flatlist
 - SearchInput
 - Filter by name

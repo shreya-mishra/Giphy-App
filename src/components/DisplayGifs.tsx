@@ -3,13 +3,10 @@ import {
   FlatList,
   Image,
   StyleSheet,
-  Text,
   View,
 } from 'react-native';
 import React from 'react';
-import FastImage from 'react-native-fast-image';
 
-// TODO:Add type of the response
 const DisplayGifs = ({
   giphyData,
   isLoading,
@@ -19,9 +16,8 @@ const DisplayGifs = ({
   isLoading: boolean;
   handleEndReached: () => {};
 }) => {
-  console.log('🚀 ~ DisplayGifs ~ giphyData:', giphyData);
-  const keyExtractor = (item: any) => item.id;
-  const renderItem = ({item}) => {
+  const keyExtractor = (item: {id: string}) => item.id;
+  const renderItem = ({item}: {item: {images: {original: {url: string}}}}) => {
     const {original} = item.images;
     const {url} = original;
     return (
@@ -31,7 +27,6 @@ const DisplayGifs = ({
         }}
         height={150}
         width={150}
-        // resizeMode={FastImage.resizeMode.contain}
         style={styles.image}
       />
     );
@@ -47,9 +42,9 @@ const DisplayGifs = ({
         data={giphyData}
         keyExtractor={keyExtractor}
         renderItem={renderItem}
-        // onEndReached={handleEndReached}
-        // ListFooterComponent={renderFooter}
-        // onEndReachedThreshold={0.1}
+        onEndReached={handleEndReached}
+        ListFooterComponent={renderFooter}
+        onEndReachedThreshold={0.1}
       />
     </View>
   );
