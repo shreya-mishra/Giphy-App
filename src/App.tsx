@@ -1,19 +1,21 @@
 import React, {useEffect, useState} from 'react';
-import {View} from 'react-native';
-import {getGiphyData} from './GetData/GetGiphyData';
+import {View, useColorScheme} from 'react-native';
+import {getGiphyData} from './utils/GetData/GetGiphyData';
 import DisplayGifs from './components/DisplayGifs';
 import SearchInput from './components/SearchInput';
-
+import {COLORS} from './constants/Colors';
+// import {ThemeProvider, useTheme} from './contextApi/ThemeContext';
 const App = () => {
+  // const {isDarkMode, toggleTheme} = useTheme();
   const [giphyData, setGiphyData] = useState([]);
   const [searchVal, setSearchVal] = useState<string>();
   const [searchGif, setSearchGif] = useState<string>();
-  const [searchResults, setSearchResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-
+  const theme = useColorScheme();
+  console.log('theme>>>', theme);
   useEffect(() => {
     fetchGifData();
-  });
+  }, [searchVal]);
 
   const handleSearch = () => {
     setSearchGif(searchVal);
@@ -22,30 +24,28 @@ const App = () => {
     try {
       setIsLoading(true);
       const res = await getGiphyData();
-      if (searchVal?.length > 0 || searchGif?.length > 0) {
-        const filteredData = giphyData.filter(item =>
+      if (searchVal && searchVal?.trim().length > 0) {
+        const filteredData = res.filter((item: {username: string}) =>
           item.username.toLowerCase().includes(searchVal.toLowerCase()),
         );
-        setSearchResults(filteredData);
         setGiphyData(filteredData);
       } else {
         setGiphyData(res);
       }
-      setSearchVal('');
     } catch (error) {
       console.error('error fetching data', error);
     } finally {
       setIsLoading(false);
-      // setSearchVal('');
     }
   };
   const handleEndReached = () => {
-    if (!isLoading) {
-      fetchGifData();
-    }
+    fetchGifData();
   };
   return (
-    <View>
+    <View
+      style={{
+        backgroundColor: theme === 'dark' ? COLORS.secondary : COLORS.primary,
+      }}>
       <SearchInput
         setSearchVal={setSearchVal}
         searchVal={searchVal}
@@ -53,7 +53,6 @@ const App = () => {
       />
       <DisplayGifs
         giphyData={giphyData}
-        searchGif={searchVal}
         isLoading={isLoading}
         handleEndReached={handleEndReached}
       />
